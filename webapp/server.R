@@ -7,20 +7,22 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+# library(shinydashboard)
+
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-    output$distPlot <- renderPlot({
-
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-
-    })
+  output$tSum <- 
+    output$tIn <- 
+    output$tEx <- 
+    output$tExAl <- 
+    output$tCC <- renderDataTable(datatable(data = data.frame(a=1:10,b=letters[1:10]),editable = T))
+  
+  output$pSum <-
+    output$pIn <-
+    output$pEx <-
+    output$pExAl <- 
+    output$pCC <- renderPlotly(plot_ly(mode="lines",type="scatter"))
 
 })

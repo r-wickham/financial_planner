@@ -14,9 +14,11 @@ portfolio <- function(name, times){
   pf <- list(name=name,
              times=times,
              assets=NULL,
-             expenses=NULL,
-             expenseAllocation=NULL)
+             expenses=data.frame(time=times),
+             expenseAllocation=NULL,
+             CC=NULL)
   ## Set the name for the class
   class(pf) <- "pf"
   pf
 }
+
