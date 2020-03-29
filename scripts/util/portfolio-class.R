@@ -15,7 +15,7 @@ portfolio <- function(name, times){
   pf <- list(name=name,
              times=times,
              assets=NULL,
-             expenses=data.frame(time=times),
+             expenses=data.frame(time=times,total=0),
              expenseAllocation=data.frame(time=times),
              CC=NULL)
   
@@ -27,12 +27,12 @@ portfolio <- function(name, times){
                                  ror=0,
                                  eAmount=0)
   
-  #Template for new credit card
-  pf$creditCardTemplate <- data.frame(time=pf$times,
-                                      bill=0,
-                                      payment=0,
-                                      interest=0,
-                                      carryover=0)
+  #Template for new debt
+  pf$debtTemplate <- data.frame(time=pf$times,
+                                bill=0,
+                                payment=0,
+                                interest=0,
+                                carryover=0)
   #Assign name attribute
   attr(pf,"name") <- name
   

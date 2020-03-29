@@ -1,5 +1,9 @@
 ### String Manipulation ---------------------------------------------------------------------------
 
+nonTimeNames <- function(string)
+  grep(pattern = "^(?!.*time)", string, value = T, perl = T)
+
+
 getExpenseNames <- function(inDF){
   #'
   #' Retrieve the current expense category names
@@ -11,7 +15,7 @@ getExpenseNames <- function(inDF){
   #' see here for more regex info:
   #' https://stackoverflow.com/questions/27986361/regular-expression-excluding-word-in-r
   #' 
-  exNames <- grep(pattern = "^(?!.*time)", names(inDF), value = T, perl = T)
+  exNames <- nonTimeNames(names(inDF))
   if(length(exNames)==0) return(NULL)
   exNames
 }

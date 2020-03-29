@@ -56,34 +56,37 @@ createNewExpense.pf <- function( pf, name, ...  ){
   #' @param pf portfolio class object to assing new asset
   #' @param name name of the new expense
   #' 
-  #' @return portfolio with new zeroed-out expense defined
+  #' @return portfolio with new zeroed-out expense defined and
+  #'         new expense allocation positions
+  #' 
   #' 
   #' @example 
   #' pf <- createNewAsset(pf, "Joe-Groceries")
   #' 
   pf$expenses[, name] <- 0
-  cat(sprintf("\n\tExpense assigned correctly"))
+  pf$expenseAllocation[, c(sprintf("per_",name),sprintf("c_",name))] <- 0
+  cat(sprintf("\n\tExpense created correctly"))
   pf
 }
 
 
-### createCreditCard ------------------------------------------------------------------------------
+### createDebt ------------------------------------------------------------------------------
 
-createCreditCard <- function( pf, name, ...  ){
+createNewDebt <- function( pf, name, ...  ){
   #base class definition function
-  cat(sprintf("\nCreating new credit card:\t%s", name))
-  UseMethod("createCreditCard",pf)
+  cat(sprintf("\nCreating new debt:\t%s", name))
+  UseMethod("createNewDebt",pf)
 }
 
 
-createCreditCard.default <- function( pf, name, ...  ){
+createNewDebt.default <- function( pf, name, ...  ){
   #default function behavoir to non-portfolio
-  cat(sprintf("\n\tNo available method for application of 'createCreditCard' to object of class %s",
+  cat(sprintf("\n\tNo available method for application of 'createNewDebt' to object of class %s",
               as.character(class(pf))))
   pf
 }
 
-createCreditCard.pf <- function( pf, name, ...  ){
+createNewDebt.pf <- function( pf, name, ...  ){
   #
   #' Adds a new expense column to the expense data.frame with the specified name
   #' 
@@ -95,8 +98,8 @@ createCreditCard.pf <- function( pf, name, ...  ){
   #' @example 
   #' pf <- createNewAsset(pf, "Joe-Groceries")
   #' 
-  pf$CC[[name]] <- pf$
-  cat(sprintf("\nCredit card assigned correctly"))
+  pf$debt[[name]] <- pf$debtemplate
+  cat(sprintf("\nDebt assigned correctly"))
   pf
 }
 

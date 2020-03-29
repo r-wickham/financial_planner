@@ -39,13 +39,13 @@ shinyUI(
         titlePanel("Long-Mid Term Financial Planner"),
         sidebarPanel(
             # Portfolio Selection
-            selectInput("pf",
+            selectInput("pfSel",
                         label="Portfolio Selection:",
-                        choices=c("<None>","all the way"),
+                        choices=getPfSaveNames(),
                         selected=NULL),
             # Save Name
             textInput("pfSave", label="Portfolio Name:", value = "",
-                      placeholder = "Joe's Portfolio"),
+                      placeholder = "Joe Portfolio"),
             #Save Button
             actionButton("savePf", "Save Portfolio"),
             # Time period selection
@@ -130,8 +130,8 @@ shinyUI(
             tabsetPanel(
                 ### Summary -----------------------------------------------------------------------
                 tabPanel("Summary",
-                         fluidRow(plotlyOutput("pSum")),
-                         fluidRow(dataTableOutput("tSum"))
+                         fluidRow(plotlyOutput("sumP")),
+                         fluidRow(dataTableOutput("sumT"))
                 ), # summary tab panel
 
                 ### Income ------------------------------------------------------------------------
@@ -139,22 +139,23 @@ shinyUI(
                          fluidRow(
                              # Income selection and creation options
                              column(width=4,
-                                    selectInput("sIn",
+                                    selectInput("inSel",
                                                 label="Income Selection:",
                                                 choices=names(pf$assets))
                              ),
                              # Name of new income
                              column(width=4,
-                                    textInput("sNewIn",label="New Income Name")
+                                    textInput("inNewName",label="New Income Name")
                              ),
                              # Add new income button
                              column(width=4,
-                                    actionButton("sCreateIn",label="Add New Income"),
+                                    actionButton("inMakeNew",label="Add New Asset"),
+                                    actionButton("inRemove", label="Remove Asset")
                              )
                          ), # Top row income
                          #table and plotly
-                         fluidRow(plotlyOutput("pIn")),
-                         fluidRow(dataTableOutput("tIn"))
+                         fluidRow(plotlyOutput("inP")),
+                         fluidRow(dataTableOutput("inT"))
                 ), # income panel
 
                 ### Expense -----------------------------------------------------------------------
@@ -162,58 +163,68 @@ shinyUI(
                          fluidRow(
                              # Income selection and creation options
                              column(width=4,
-                                    selectInput("eIn",
+                                    selectInput("exSel",
                                                 label="Expense Selection:",
-                                                choices=names(pf$expenses))
+                                                choices=getExpenseNames(pf$expenses))
                              ),
                              # Name of new income
                              column(width=4,
-                                    textInput("sNewName",label="New Expense Name")
+                                    textInput("exNewName",label="New Expense Name")
                              ),
                              # Add new income button
                              column(width=4,
-                                    actionButton("sMakeNew",label="Add New Expense"),
+                                    actionButton("exMakeNew",label="Add New Expense"),
+                                    actionButton("exRemove", label="Remove Expense")
                              )
                          ), # Top row expense
                          #table and plotly
-                         fluidRow(plotlyOutput("pEx")),
-                         fluidRow(dataTableOutput("tEx"))
+                         fluidRow(plotlyOutput("exP")),
+                         fluidRow(dataTableOutput("exT"))
                 ), # expense panel
 
 
-                ### Credit Cards ------------------------------------------------------------------
-                tabPanel("Credit Cards",
+                ### Debt --------------------------------------------------------------------------
+                tabPanel("Debt",
                          fluidRow(
                              # Credit Card selection and creation options
                              column(width=4,
-                                    selectInput("eIn",
-                                                label="CC Selection:",
+                                    selectInput("dSel",
+                                                label="Debt Selection:",
                                                 choices=names(pf$expenses))
                              ),
                              # Name of new income
                              column(width=4,
-                                    textInput("sNewName",label="New CC Name")
+                                    textInput("dNewName",label="New Debt Name")
                              ),
                              # Add new income button
                              column(width=4,
-                                    actionButton("sMakeNew",label="Add New CC"),
+                                    actionButton("dMakeNew",label="Add New Debt"),
+                                    actionButton("dRemove", label="Remove Debt")
                              )
                          ), # Top row expense
                          #table and plotly
-                         fluidRow(plotlyOutput("pCC")),
-                         fluidRow(dataTableOutput("tCC"))
+                         fluidRow(plotlyOutput("dP")),
+                         fluidRow(dataTableOutput("dT"))
                 ), # CC tab
 
                 ### Expense Allocation ------------------------------------------------------------
                 tabPanel("Expense Allocation",
                          #dropdown to select expense allocation method
-                         selectInput("sExAL",
+                         selectInput("exAlSel",
                                      label="Expense Allocation Method:",
                                      choices=c("Percent","Cost")),
-                         fluidRow(plotlyOutput("pExAl")),
-                         fluidRow(dataTableOutput("tExAl"))
+                         fluidRow(plotlyOutput("exAlP")),
+                         fluidRow(dataTableOutput("exAlT"))
                 ) # expense allocation panel
-            ) #tabset panel
+            ), #tabset panel
+            
+            ### Console Log ----------------------------------------------------------------------------
+            shinyjs::useShinyjs(),
+            textOutput("text")
+            
         ) # main panel
+        
+
+        
     ) #fluid page
 ) # shiny UI

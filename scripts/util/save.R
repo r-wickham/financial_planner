@@ -20,5 +20,11 @@ savePortfolio <- function(pf){
   #' @param pf  portfolio class object to save
   #' 
   createSaveDir()
-  save(pf,file = sprintf("portfolios/%s.RData", pf$name))
+  saveFileName <- sprintf("portfolios/%s.RData", pf$name)
+  cat(sprintf("\nSaved portfolio:\t'%s'", saveFileName))
+  save(pf,file = saveFileName)
+}
+
+getPfSaveNames <- function(){
+  c("testing")
 }

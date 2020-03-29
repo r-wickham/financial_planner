@@ -7,6 +7,10 @@ library(plotly)
 library(shiny)
 library(DT)
 library(lubridate)
+library(yaml)
+library(shinyjs)
+
+"%!in%" <- function(x,y)!(x %in% y)
 
 # The app name
 appName <- "financial_planner"
@@ -14,11 +18,18 @@ appName <- "financial_planner"
 # Ensuring the working directory is correct
 while( basename(getwd()) != appName ) setwd("..")
 
+#Save directory for portfolio relative to project base dir
+pfSaveDir <- "saved_portfolios"
+
 ### Options ---------------------------------------------------------------------------------------
 
 # Setting the datatable options globally
+# Website: https://datatables.net/reference/option/
 options(DT.options=
-          list(scroller=T, scrollY=300, dom='ti', autoWidth=T))
+          list(scroller=T, 
+               scrollY=300, # height of scroll window
+               dom='ti',    # data control elements 
+               autoWidth=T))
 
 
 ### Sourcing Scripts ------------------------------------------------------------------------------ 
@@ -30,23 +41,29 @@ cat(sprintf("\nSourcing scripts:\n\t%s",
 for(s in scriptsToSource) source(s)
 
 
-### Default Portfolio -----------------------------------------------------------------------------
-# A default portfolio to use as an example
-#
-# TODO:   Eventually save a pre-created portfolio as 'Default Portfolio'
-#         to auto-load or be created on startup if no other portfolios are available
-#         to load
 
-# 50 years out from now
-pf <- portfolio(name = "Default Portfolio",
-                times = year(Sys.Date()):(year(Sys.Date())+60))
 
-# Add steady 50k income
-pf <- addAsset(pf = pf, name = "Joe's Income")
 
-# Add 
+### CONTINUE HERE ######################
 
-# Assume expenses of 40k
+# For testing writing messages to a console
+foo <- function() {
+  message("one")
+  Sys.sleep(0.5)
+  message("two")
+}
+
+# Allocate expenses
+# pf <- allocateExpenses()
+
+
+
+
+
+
+
+
+
 
 
 
